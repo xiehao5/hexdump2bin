@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1646401572 source:e:\hexdump2bin\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"main.h"
+
+1646377769 e:\hexdump2bin\main.h
+
