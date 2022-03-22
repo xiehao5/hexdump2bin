@@ -3,6 +3,51 @@
 #include <string.h>
 #include "main.h"
 
+int atohex(const char *str, int len)
+{
+	const char *origin_str = str;
+	int ret = 0;
+	int sign = 1;
+
+	if(str == NULL || len == 0)
+	{
+		return 0;
+	}
+
+	while(*str == ' ' && str - origin_str <= len)
+	{
+		str++;
+	}
+
+	if(*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+
+	while(((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'F') || (*str >= 'a' && *str <= 'f')) && str - origin_str <= len)
+	{
+		if(*str >= '0' && *str <= '9')
+		{
+			ret = ret * 16 + *str - '0';
+		}
+		else if(*str >= 'A' && *str <= 'F')
+		{
+			ret = ret * 16 + *str - 'A' + 10;
+		}
+		else if(*str >= 'a' && *str <= 'f')
+		{
+			ret = ret * 16 + *str - 'a' + 10;
+		}
+		else
+		{
+
+		}
+		str++;
+	}
+
+	return ret * sign;
+}
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +59,9 @@ int main(int argc, char *argv[])
     int8_t buffer[BUF_SIZE];
 //    uint8_t dst_buf[LINE_BUF_SIZE];
     FILE *src = NULL, *dst = NULL;
+
+
+
     if(argc != 2)
     {
         //参数太少
@@ -39,8 +87,12 @@ int main(int argc, char *argv[])
     src = fopen(argv[1], "r");
     dst = fopen(newfilename, "wb");
 
-//    src = fopen("1.hexdump", "r");
-//    dst = fopen("1.pdf", "wb");
+
+
+
+
+    //src = fopen("1.hexdump", "r");
+    //dst = fopen("1.pdf", "wb");
 
     if(src == NULL || dst == NULL)
     {
@@ -58,19 +110,12 @@ int main(int argc, char *argv[])
         return -4;
     }
 
-    //fgets(buffer, BUF_SIZE, src); //读行
-    //printf("%s\n", buffer);
-
-    //sscanf(buffer,"%x: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x", offset, )
-
-
-
-    //while(fscanf(src, "%x", &offset) != EOF)
     while(!feof(src))
     {
 		fgets(buffer, 9, src);
-        sscanf(buffer, "%x", &offset);
-        //printf("offset %d\n\n", offset);
+        //_snscanf_s(buffer, 9, "%x", &offset);
+        offset = atohex(buffer, 9);
+        //printf("offset 0x%x\n\n", offset);
         fseek(dst, offset, SEEK_SET);
 
         fgets(buffer, 3, src);
@@ -97,7 +142,7 @@ int main(int argc, char *argv[])
         {
             fgets(buffer, 4, src);
 
-            //printf("%saaaa\n", buffer);
+            //printf("%send\n", buffer);
 
             if(!strcmp(buffer, "   "))
             {
@@ -106,7 +151,10 @@ int main(int argc, char *argv[])
             }
             else
             {
-                sscanf(buffer, "%x", &data);
+                //_snscanf_s(buffer, 2, "%x", &data);
+                data = atohex(buffer, 3);
+                //printf("data: 0x%x\n\n", data);
+                //sscanf(buffer, "%x", &data);
                 fwrite((const void *)(&data), sizeof(data), 1, dst);
                 //fwrite((const void *)(buffer), sizeof(buffer), 1, dst);
 
