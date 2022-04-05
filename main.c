@@ -29,15 +29,15 @@ int atohex(const char *str, int len)
 	{
 		if(*str >= '0' && *str <= '9')
 		{
-			ret = ret * 16 + *str - '0';
+			ret = ( ret << 4 ) + *str - '0';	//ret = ret * 16 + *str - '0';
 		}
 		else if(*str >= 'A' && *str <= 'F')
 		{
-			ret = ret * 16 + *str - 'A' + 10;
+			ret = ( ret << 4 ) + *str - 'A' + 10;	//ret = ret * 16 + *str - 'A' + 10;
 		}
 		else if(*str >= 'a' && *str <= 'f')
 		{
-			ret = ret * 16 + *str - 'a' + 10;
+			ret = ( ret << 4 ) + *str - 'a' + 10;	//ret = ret * 16 + *str - 'a' + 10;
 		}
 		else
 		{
