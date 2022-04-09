@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
 
     if(argc != 2)
     {
-        //²ÎÊıÌ«ÉÙ
-        printf("²ÎÊıÌ«ÉÙ");
+        //å‚æ•°å¤ªå°‘
+        printf("å‚æ•°å¤ªå°‘");
         getchar();
         return -1;
     }
@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
 //    printf("filename_len = %d", filename_len);
     if(strstr(argv[1], ".hexdump") != argv[1] + filename_len - 8)
     {
-        //ÎÄ¼şÃû²»¶Ô
-        printf("ÎÄ¼şÃû²»¶Ô");
+        //æ–‡ä»¶åä¸å¯¹
+        printf("æ–‡ä»¶åä¸å¯¹");
         getchar();
         return -2;
     }
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     if(src == NULL || dst == NULL)
     {
-        printf("ÎÄ¼ş´ò²»¿ª");
+        printf("æ–‡ä»¶æ‰“ä¸å¼€");
         getchar();
         return -3;
     }
@@ -105,8 +105,10 @@ int main(int argc, char *argv[])
 
     if(strstr(buffer, "  Offset: 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F") != buffer)
     {
-        printf("ÎÄ¼şÍ·²»¶Ô %s", buffer);
+        printf("æ–‡ä»¶å¤´ä¸å¯¹ %s", buffer);
         getchar();
+	fclose(src);
+        fclose(dst);
         return -4;
     }
 
@@ -129,10 +131,10 @@ int main(int argc, char *argv[])
             }
             else
             {
-				fflush(dst);
+                fflush(dst);
                 fclose(src);
                 fclose(dst);
-                printf("ÎÄ¼ş¸ñÊ½´íÎó");
+                printf("æ–‡ä»¶æ ¼å¼é”™è¯¯");
                 getchar();
                 return -4;
             }
@@ -146,7 +148,7 @@ int main(int argc, char *argv[])
 
             if(!strcmp(buffer, "   "))
             {
-                fgets(buffer, BUF_SIZE, src); //»»ĞĞ
+                fgets(buffer, BUF_SIZE, src); //æ¢è¡Œ
                 break;
             }
             else
